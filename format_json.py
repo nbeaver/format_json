@@ -63,7 +63,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '-n',
         '--no-follow',
-        help='Do not follow symbolic links, dereference them instead',
+        help='Do not follow symbolic links, dereference and create a new copy instead',
         action="store_true",
     )
     parser.add_argument(
