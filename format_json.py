@@ -5,6 +5,7 @@ import json
 import argparse
 import tempfile
 import os
+import logging
 
 def format_json_in_place(pathname):
     dirname = os.path.dirname(pathname)
@@ -26,6 +27,7 @@ def format_json_in_place(pathname):
         )
         tmp_fp.write('\n') # add a trailing newline.
     # Replace the file atomically.
+    logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
     os.replace(tmp_fp.name, pathname)
 
 def writeable_file(pathname):
@@ -42,11 +44,29 @@ if __name__ == '__main__':
         description='Format JSON files in place.'
     )
     parser.add_argument(
+        '-v',
+        '--verbose',
+        help='More verbose logging',
+        dest="loglevel",
+        default=logging.WARNING,
+        action="store_const",
+        const=logging.INFO,
+    )
+    parser.add_argument(
+        '-d',
+        '--debug',
+        help='Enable debugging logs',
+        action="store_const",
+        dest="loglevel",
+        const=logging.DEBUG,
+    )
+    parser.add_argument(
         'files',
         type=writeable_file,
         help='JSON filepaths',
         nargs='+'
     )
     args = parser.parse_args()
+    logging.basicConfig(level=args.loglevel)
     for json_file in args.files:
         format_json_in_place(json_file)
