@@ -23,7 +23,7 @@ def format_json_in_place(pathname):
             ensure_ascii=False,
             indent=4,
             separators=(',', ': '),
-            sort_keys=True
+            sort_keys=True,
         )
         tmp_fp.write('\n') # add a trailing newline.
     # Replace the file atomically.
