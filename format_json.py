@@ -16,7 +16,7 @@ def format_json_in_place(pathname):
             sys.stderr.write("In file: {}\n".format(fp.name))
             raise
     # Create a temporary file in the same directory.
-    with tempfile.NamedTemporaryFile(dir=directory, delete=False) as tmp_fp:
+    with tempfile.NamedTemporaryFile(mode='w', dir=dirname, delete=False) as tmp_fp:
         json.dump(
             data,
             tmp_fp,
