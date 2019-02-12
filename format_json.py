@@ -61,6 +61,12 @@ if __name__ == '__main__':
         const=logging.DEBUG,
     )
     parser.add_argument(
+        '-n',
+        '--no-follow',
+        help='Do not follow symbolic links, dereference them instead',
+        action="store_true",
+    )
+    parser.add_argument(
         'files',
         type=writeable_file,
         help='JSON filepaths',
@@ -69,4 +75,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     logging.basicConfig(level=args.loglevel)
     for json_file in args.files:
-        format_json_in_place(json_file)
+        if args.no_follow:
+            target_path = json_file
+        else:
+            target_path = os.path.realpath(json_file)
+        format_json_in_place(target_path)
