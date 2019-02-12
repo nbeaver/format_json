@@ -6,7 +6,6 @@ import argparse
 import tempfile
 import os
 
-# https://backreference.org/2011/01/29/in-place-editing-of-files/
 def format_json_in_place(pathname):
     dirname = os.path.dirname(pathname)
     with open(pathname, 'r') as fp:
