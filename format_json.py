@@ -7,7 +7,7 @@ import tempfile
 import os
 import logging
 
-def format_json_in_place(pathname):
+def format_json_in_place(pathname, sync=False):
     dirname = os.path.dirname(pathname)
     with open(pathname, 'r') as fp:
         try:
@@ -26,6 +26,12 @@ def format_json_in_place(pathname):
             sort_keys=True,
         )
         tmp_fp.write('\n') # add a trailing newline.
+        if sync:
+            # Before we replace the old file with the new one,
+            # force the new file to be fully written to disk.
+            # Linux-only.
+            logging.debug('running fdatasync on {}'.format(tmp_fp.name))
+            os.fdatasync(tmp_fp)
     # Replace the file atomically.
     logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
     os.replace(tmp_fp.name, pathname)
@@ -67,6 +73,12 @@ if __name__ == '__main__':
         action="store_true",
     )
     parser.add_argument(
+        '-s',
+        '--sync',
+        help='Run fdatasync to ensure file is written to disk',
+        action="store_true",
+    )
+    parser.add_argument(
         'files',
         type=writeable_file,
         help='JSON filepaths',
@@ -79,4 +91,4 @@ if __name__ == '__main__':
             target_path = json_file
         else:
             target_path = os.path.realpath(json_file)
-        format_json_in_place(target_path)
+        format_json_in_place(target_path, args.sync)
