@@ -30,6 +30,8 @@ def format_json_in_place(pathname, sync=False):
             # Before we replace the old file with the new one,
             # force the new file to be fully written to disk.
             # Linux-only.
+            # https://blog.gocept.com/2013/07/15/reliable-file-updates-with-python/
+            tmp_fp.flush()
             logging.debug('running fdatasync on {}'.format(tmp_fp.name))
             os.fdatasync(tmp_fp)
     # Replace the file atomically.
