@@ -7,7 +7,7 @@ import tempfile
 import os
 import logging
 
-def format_json_in_place(pathname, sync=False):
+def format_json_in_place(pathname, sync=True):
     dirname = os.path.dirname(pathname)
     with open(pathname, 'r') as fp:
         try:
