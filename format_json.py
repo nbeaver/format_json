@@ -32,9 +32,13 @@ def format_json_in_place(pathname, sync=False):
             # Linux-only.
             # https://blog.gocept.com/2013/07/15/reliable-file-updates-with-python/
             tmp_fp.flush()
-            logging.debug('running fdatasync on {}'.format(tmp_fp.name))
-            os.fdatasync(tmp_fp)
-    # Replace the file atomically.
+            logging.debug('attempting to run fdatasync on {}'.format(tmp_fp.name))
+            try :
+                os.fdatasync(tmp_fp)
+            except AttributeError:
+                logging.info("os.fdatasync not available on '{}'".format(os.name))
+                pass
+    # Attempt to replace the file atomically.
     logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
     os.replace(tmp_fp.name, pathname)
 
