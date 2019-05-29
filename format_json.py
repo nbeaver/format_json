@@ -6,6 +6,7 @@ import argparse
 import tempfile
 import os
 import logging
+import platform
 
 def format_json_in_place(pathname, sync=True):
     dirname = os.path.dirname(pathname)
@@ -36,7 +37,7 @@ def format_json_in_place(pathname, sync=True):
             try :
                 os.fdatasync(tmp_fp)
             except AttributeError:
-                logging.info("os.fdatasync not available on '{}'".format(os.name))
+                logging.info("os.fdatasync not available on '{}'".format(platform.system()))
                 pass
     # Attempt to replace the file atomically.
     logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
