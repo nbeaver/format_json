@@ -41,7 +41,11 @@ def format_json_in_place(pathname, sync=True):
                 pass
     # Attempt to replace the file atomically.
     logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
-    os.replace(tmp_fp.name, pathname)
+    try:
+        os.replace(tmp_fp.name, pathname)
+    except AttributeError:
+        # In Python 2.7, os.replace is not available.
+        os.rename(tmp_fp.name, pathname)
 
 def writeable_file(pathname):
     if not os.path.isfile(pathname):
