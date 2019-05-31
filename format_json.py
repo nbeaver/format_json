@@ -85,9 +85,9 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         '-s',
-        '--sync',
-        help='Run fdatasync to ensure file is written to disk',
-        action="store_true",
+        '--no-sync',
+        help='Do not run fdatasync (file may not be completely written to disk)',
+        action="store_false",
     )
     parser.add_argument(
         'files',
@@ -102,4 +102,4 @@ if __name__ == '__main__':
             target_path = json_file
         else:
             target_path = os.path.realpath(json_file)
-        format_json_in_place(target_path, args.sync)
+        format_json_in_place(target_path, args.no_sync)
