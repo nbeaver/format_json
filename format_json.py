@@ -39,6 +39,8 @@ def format_json_in_place(pathname, sync=True):
             except AttributeError:
                 logging.info("os.fdatasync not available on '{}'".format(platform.system()))
                 pass
+        else:
+            logging.warning("file may not be fully written to disk: '{}'".format(tmp_fp.name))
     # Attempt to replace the file atomically.
     logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
     try:
