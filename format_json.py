@@ -8,8 +8,9 @@ import os
 import logging
 import platform
 
-def format_json_in_place(pathname, sync=True):
+def format_json_in_place(pathname, sync=True, indent_level=4):
     dirname = os.path.dirname(pathname)
+    indent_string = ' '*indent_level
     with open(pathname, 'r') as fp:
         try:
             data = json.load(fp)
@@ -22,7 +23,7 @@ def format_json_in_place(pathname, sync=True):
             data,
             tmp_fp,
             ensure_ascii=False,
-            indent=4,
+            indent=indent_string,
             separators=(',', ': '),
             sort_keys=True,
         )
@@ -92,6 +93,13 @@ if __name__ == '__main__':
         action="store_false",
     )
     parser.add_argument(
+        '-i',
+        '--indent',
+        help='Indentation level (default 4)',
+        type=int,
+        default=4,
+    )
+    parser.add_argument(
         'files',
         type=writeable_file,
         help='JSON filepaths',
@@ -104,4 +112,4 @@ if __name__ == '__main__':
             target_path = json_file
         else:
             target_path = os.path.realpath(json_file)
-        format_json_in_place(target_path, args.no_sync)
+        format_json_in_place(target_path, args.no_sync, args.indent)
