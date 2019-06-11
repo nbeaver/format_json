@@ -41,5 +41,22 @@ class MyTestCase(unittest.TestCase):
         }
         self.test_input_output(data)
 
+    def test_formatting(self):
+        payload = {'a' : 'A', 'b': 'B', 'c': 'C'}
+        expected = """{
+    "a": "A",
+    "b": "B",
+    "c": "C"
+}
+"""
+        fp = tempfile.NamedTemporaryFile(mode='w', delete=False)
+        json.dump(payload, fp)
+        logging.info(fp.name)
+        fp.close()
+        format_json.format_json_in_place(fp.name)
+        with open(fp.name) as fp2:
+            out = fp2.read()
+        assert(out == expected)
+
 if __name__ == '__main__':
     unittest.main()
