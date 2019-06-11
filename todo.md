@@ -1,2 +1,2 @@
-- [ ] Testing script.
+- [x] Minimal testing script.
 - [x] Flag to change indentation level.
