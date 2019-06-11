@@ -47,3 +47,5 @@ is surprisingly tricky to get right.
 https://stupidpythonideas.blogspot.com/2014/07/getting-atomic-writes-right.html
 
 https://blog.gocept.com/2013/07/15/reliable-file-updates-with-python/
+
+https://backreference.org/2011/01/29/in-place-editing-of-files/
