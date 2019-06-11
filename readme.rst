@@ -1,3 +1,35 @@
+Script to format JSON files in place
+====================================
+
+Usage
+-----
+
+::
+
+     $ format_json.py /path/to/file1.json
+
+also handles multiple files::
+
+     $ format_json.py /path/to/file1.json /path/to/file2.json
+
+Features
+--------
+
+- Correctly modifies files in place with temporary files and ``fdatasync()``.
+
+  (This can be turned off with ``-s`` ``--no-sync``.)
+
+- Follows symlinks properly instead of dereferencing and creating a new copy.
+
+  (This can be turned off with ``-n`` ``--no-follow``.)
+
+- Adjustable indentation level (defaults to 4 spaces).
+
+  (Adjustable with ``-i`` ``--indent``.)
+
+Motivation
+----------
+
 There are many tools to pretty-print JSON:
 
 https://stackoverflow.com/questions/5243885/json-command-line-formatter-tool-for-linux
