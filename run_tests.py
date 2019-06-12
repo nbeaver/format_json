@@ -58,5 +58,27 @@ class MyTestCase(unittest.TestCase):
             out = fp2.read()
         assert(out == expected)
 
+    def test_increase_indentation(self):
+        payload = {'a' : 'A', 'b': 'B', 'c': 'C'}
+        fp = tempfile.NamedTemporaryFile(mode='w', delete=False)
+        json.dump(payload, fp, indent=1)
+        logging.info(fp.name)
+        fp.close()
+        format_json.format_json_in_place(fp.name, indent_level=4)
+        with open(fp.name) as fp2:
+            out = json.load(fp2)
+        assert(out == payload)
+
+    def test_reduce_indentation(self):
+        payload = {'a' : 'A', 'b': 'B', 'c': 'C'}
+        fp = tempfile.NamedTemporaryFile(mode='w', delete=False)
+        json.dump(payload, fp, indent=9)
+        logging.info(fp.name)
+        fp.close()
+        format_json.format_json_in_place(fp.name, indent_level=4)
+        with open(fp.name) as fp2:
+            out = json.load(fp2)
+        assert(out == payload)
+
 if __name__ == '__main__':
     unittest.main()
