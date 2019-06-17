@@ -1,3 +1,6 @@
 - [x] Minimal testing script.
 - [ ] More thorough tests.
+    - [ ] Test non-default indentation levels
+    - [ ] Test sort key order is preserved
+    - [ ] Test Python 2.7
 - [x] Flag to change indentation level.
