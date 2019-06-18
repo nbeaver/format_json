@@ -28,12 +28,12 @@ def format_json_in_place(pathname, sync=True, indent_level=4):
             sort_keys=True,
         )
         tmp_fp.write('\n') # add a trailing newline.
+        tmp_fp.flush()
         if sync:
             # Before we replace the old file with the new one,
             # force the new file to be fully written to disk.
             # Linux-only.
             # https://blog.gocept.com/2013/07/15/reliable-file-updates-with-python/
-            tmp_fp.flush()
             logging.debug('attempting to run fdatasync on {}'.format(tmp_fp.name))
             try :
                 os.fdatasync(tmp_fp)
