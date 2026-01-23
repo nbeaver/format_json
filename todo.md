@@ -1,4 +1,5 @@
 - [x] Minimal testing script.
+- [ ] Handle UnicodeEncodeError on Windows
 - [ ] More thorough tests.
     - [ ] Test non-default indentation levels
     - [ ] Test sort key order is preserved
