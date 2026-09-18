@@ -11,14 +11,14 @@ import platform
 def format_json_in_place(pathname, sync=True, indent_level=4):
     dirname = os.path.dirname(pathname)
     indent_string = ' '*indent_level
-    with open(pathname, 'r') as fp:
+    with open(pathname, 'r', encoding='utf-8') as fp:
         try:
             data = json.load(fp)
         except ValueError:
             sys.stderr.write("In file: {}\n".format(fp.name))
             raise
     # Create a temporary file in the same directory.
-    with tempfile.NamedTemporaryFile(mode='w', dir=dirname, delete=False) as tmp_fp:
+    with tempfile.NamedTemporaryFile(mode='w', dir=dirname, delete=False, encoding='utf-8') as tmp_fp:
         json.dump(
             data,
             tmp_fp,
