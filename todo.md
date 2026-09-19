@@ -1,7 +1,10 @@
-- [x] Minimal testing script.
+- [ ] Preserve permissions, including owner and group
+  - https://stackoverflow.com/questions/19787348/copy-file-keep-permissions-and-owner
 - [ ] Handle UnicodeEncodeError on Windows
+- [x] Minimal testing script.
 - [ ] More thorough tests.
     - [ ] Test non-default indentation levels
     - [ ] Test sort key order is preserved
     - [ ] Test Python 2.7
+    - [ ] Test for permissions being preserved
 - [x] Flag to change indentation level.
