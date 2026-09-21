@@ -44,10 +44,11 @@ def format_json_in_place(pathname, sync=True, indent_level=4):
             logging.warning("file may not be fully written to disk: '{}'".format(tmp_fp.name))
     # Attempt to replace the file atomically.
     logging.debug("replacing '{}' with '{}'".format(tmp_fp.name, pathname))
-    try:
+    if hasattr(os, 'replace'):
         os.replace(tmp_fp.name, pathname)
-    except AttributeError:
+    else:
         # In Python 2.7, os.replace is not available.
+        logging.debug("using os.rename() instead of os.replace()")
         os.rename(tmp_fp.name, pathname)
 
 def writeable_file(pathname):
